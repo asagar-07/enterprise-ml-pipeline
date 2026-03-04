@@ -1,0 +1,1 @@
+print("Running model registration stage")

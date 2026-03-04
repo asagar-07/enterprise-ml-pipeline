@@ -1,0 +1,1 @@
+print("Running data ingestion stage")

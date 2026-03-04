@@ -1,0 +1,39 @@
+stages:
+
+  data_validation:
+    cmd: python src/mlPipeline/validation.py
+    deps:
+      - src/mlPipeline/validation.py
+      - data/raw/dataset.csv
+    outs:
+      - reports/validation
+
+  feature_engineering:
+    cmd: python src/mlPipeline/features.py
+    deps:
+      - src/mlPipeline/features.py
+      - data/raw/dataset.csv
+    outs:
+      - data/features
+
+  train_model:
+    cmd: python src/mlPipeline/train.py
+    deps:
+      - src/mlPipeline/train.py
+      - data/features
+    outs:
+      - models
+
+  evaluate_model:
+    cmd: python src/mlPipeline/evaluate.py
+    deps:
+      - src/mlPipeline/evaluate.py
+      - models
+    outs:
+      - reports/evaluation
+
+  register_model:
+    cmd: python src/mlPipeline/register.py
+    deps:
+      - src/mlPipeline/register.py
+      - models
