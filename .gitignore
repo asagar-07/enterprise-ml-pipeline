@@ -6,3 +6,10 @@ reports/evaluation/
 reports/registry/
 mlruns/
 mlflow.db
+
+# Project boilerplate
+project_template.py
+
+# Ignore Jupyter Notebook checkpoints
+**/.ipynb_checkpoints
+research/*.ipynb

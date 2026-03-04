@@ -4,7 +4,7 @@ stages:
     cmd: python src/mlPipeline/validation.py
     deps:
       - src/mlPipeline/validation.py
-      - data/raw/dataset.csv
+      - data/raw/creditcard.csv
     outs:
       - reports/validation
 
@@ -12,7 +12,7 @@ stages:
     cmd: python src/mlPipeline/features.py
     deps:
       - src/mlPipeline/features.py
-      - data/raw/dataset.csv
+      - data/raw/creditcard.csv
     outs:
       - data/features
 
@@ -20,6 +20,7 @@ stages:
     cmd: python src/mlPipeline/train.py
     deps:
       - src/mlPipeline/train.py
+      - data/raw/creditcard.csv
       - data/features
     outs:
       - models
