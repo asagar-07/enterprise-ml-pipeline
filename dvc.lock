@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  data_validation:
+    cmd: python src/mlPipeline/validation.py
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: src/mlPipeline/validation.py
+      hash: md5
+      md5: 19e998d5e3f7922b1cfda382f1a37361
+      size: 139
+    outs:
+    - path: reports/validation
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+  feature_engineering:
+    cmd: python src/mlPipeline/features.py
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: src/mlPipeline/features.py
+      hash: md5
+      md5: 6ee68169d40a5e4ee0cdfab8ce4307be
+      size: 125
+    outs:
+    - path: data/features
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+  train_model:
+    cmd: python src/mlPipeline/train.py
+    deps:
+    - path: data/features
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+    - path: src/mlPipeline/train.py
+      hash: md5
+      md5: 56702e0edb5d92d8f9fe5ff929e3651b
+      size: 104
+    outs:
+    - path: models
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+  evaluate_model:
+    cmd: python src/mlPipeline/evaluate.py
+    deps:
+    - path: models
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+    - path: src/mlPipeline/evaluate.py
+      hash: md5
+      md5: cb7e930afc554458386e6e28493740c7
+      size: 119
+    outs:
+    - path: reports/evaluation
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+  register_model:
+    cmd: python src/mlPipeline/register.py
+    deps:
+    - path: models
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+    - path: src/mlPipeline/register.py
+      hash: md5
+      md5: 78181feb6e6bbaf4dfaffac0e3426290
+      size: 123
