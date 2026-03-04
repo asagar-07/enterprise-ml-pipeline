@@ -4,12 +4,12 @@ import yaml
 from src.mlPipeline import logger
 import json
 import joblib
-from ensure import ensure_annotations
+# from ensure import ensure_annotations
 from box import ConfigBox
 from typing import Any
 from pathlib import Path
 
-@ensure_annotations
+# @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
     """
     Reads a YAML file and returns its contents as a ConfigBox object.
@@ -24,25 +24,30 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         BoxValueError: If the YAML file cannot be read or parsed.
         e : empty file, invalid format, etc.
     """
-    
+    path_to_yaml = Path(path_to_yaml)
+
+    if not path_to_yaml.exists():
+        logger.error(f"Config not found: {path_to_yaml.resolve()}")
+        raise FileNotFoundError(f"Config not found: {path_to_yaml.resolve()}")
     try:
-        with open(path_to_yaml, "r") as file:
-            content = yaml.safe_load(file)
-            if content is None:
-                logger.error(f"YAML file is empty: {path_to_yaml}")
-                raise ValueError(f"YAML file is empty: {path_to_yaml}")
-            logger.info(f"Successfully loaded YAML file: {path_to_yaml}")
-            return ConfigBox(content)
-    except BoxValueError as e:
-        logger.error(f"Error parsing YAML file: {path_to_yaml}: {e}")
-        raise ValueError(f"Error parsing YAML file: {path_to_yaml}: {e}")
+        content = yaml.safe_load(path_to_yaml.read_text())
     except Exception as e:
-        logger.error(f"Error reading YAML file: {path_to_yaml}: {e}")
-        raise ValueError(f"Error reading YAML file: {path_to_yaml}: {e}")
+        logger.error(f"Error reading YAML file: {path_to_yaml.resolve()}: {e}")
+        raise
 
+    if content is None:
+        logger.error(f"YAML file is empty: {path_to_yaml.resolve()}")
+        raise ValueError(f"YAML file is empty: {path_to_yaml.resolve()}")
 
-@ensure_annotations
-def create_directories(path_to_directories: list[Path], verbose=True):
+    try:
+        logger.info(f"Successfully loaded YAML file: {path_to_yaml.resolve()}")
+        return ConfigBox(content)
+    except BoxValueError as e:
+        logger.error(f"Error parsing YAML into ConfigBox: {path_to_yaml.resolve()}: {e}")
+        raise
+
+# @ensure_annotations
+def create_directories(path_to_directories, verbose=True):
     """
     Creates directories from a list of paths.
 
@@ -55,7 +60,7 @@ def create_directories(path_to_directories: list[Path], verbose=True):
         if verbose:
             logger.info(f"Directory created at: {path}")
 
-@ensure_annotations
+# @ensure_annotations
 def save_json(path: Path, data: dict):
     """
     Saves a dictionary as a JSON file.
@@ -69,7 +74,7 @@ def save_json(path: Path, data: dict):
     logger.info(f"Data successfully saved to JSON file: {path}")
 
 
-@ensure_annotations
+# @ensure_annotations
 def load_json(path: Path) -> ConfigBox:
     """
     Loads a JSON file and returns its contents as a ConfigBox object.
@@ -86,7 +91,7 @@ def load_json(path: Path) -> ConfigBox:
     return ConfigBox(data)
 
 
-@ensure_annotations
+# @ensure_annotations
 def save_bin(data: Any, path: Path):
     """
     Saves data to a binary file using joblib.
@@ -99,7 +104,7 @@ def save_bin(data: Any, path: Path):
     logger.info(f"Data successfully saved to binary file: {path}")
 
 
-@ensure_annotations
+# @ensure_annotations
 def load_bin(path: Path) -> Any:
     """
     Loads data from a binary file using joblib.
@@ -115,7 +120,7 @@ def load_bin(path: Path) -> Any:
     return data
 
 
-@ensure_annotations
+# @ensure_annotations
 def get_size(path: Path) -> str:
     """
     Returns the size of a file in a human-readable format.

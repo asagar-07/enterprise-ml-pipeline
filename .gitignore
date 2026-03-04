@@ -13,3 +13,10 @@ project_template.py
 # Ignore Jupyter Notebook checkpoints
 **/.ipynb_checkpoints
 research/*.ipynb
+research/
+
+.DS_Store
+logs/
+venv/
+
+artifacts/*
