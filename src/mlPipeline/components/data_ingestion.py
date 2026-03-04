@@ -1,8 +1,8 @@
 import zipfile
 import gdown
-from src.mlPipeline.utils.common import get_size
-from src.mlPipeline import logger
-from src.mlPipeline.entity.config_entity import DataIngestionConfig
+from mlPipeline.utils.common import get_size
+from mlPipeline import logger
+from mlPipeline.entity.config_entity import DataIngestionConfig
 
 
 class DataIngestion:

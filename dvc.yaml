@@ -3,38 +3,46 @@ stages:
   data_validation:
     cmd: python src/mlPipeline/validation.py
     deps:
-      - src/mlPipeline/validation.py
-      - data/raw/creditcard.csv
+    - src/mlPipeline/validation.py
+    - data/raw/creditcard.csv
     outs:
-      - reports/validation
+    - reports/validation
 
   feature_engineering:
     cmd: python src/mlPipeline/features.py
     deps:
-      - src/mlPipeline/features.py
-      - data/raw/creditcard.csv
+    - src/mlPipeline/features.py
+    - data/raw/creditcard.csv
     outs:
-      - data/features
+    - data/features
 
   train_model:
     cmd: python src/mlPipeline/train.py
     deps:
-      - src/mlPipeline/train.py
-      - data/raw/creditcard.csv
-      - data/features
+    - src/mlPipeline/train.py
+    - data/raw/creditcard.csv
+    - data/features
     outs:
-      - models
+    - models
 
   evaluate_model:
     cmd: python src/mlPipeline/evaluate.py
     deps:
-      - src/mlPipeline/evaluate.py
-      - models
+    - src/mlPipeline/evaluate.py
+    - models
     outs:
-      - reports/evaluation
+    - reports/evaluation
 
   register_model:
     cmd: python src/mlPipeline/register.py
     deps:
-      - src/mlPipeline/register.py
-      - models
+    - src/mlPipeline/register.py
+    - models
+  stage_01_data_ingestion:
+    cmd: python src/mlPipeline/pipeline/stage_01_data_ingestion.py
+    deps:
+    - configs/config.yaml
+    - params.yaml
+    - src/mlPipeline/pipeline/stage_01_data_ingestion.py
+    outs:
+    - data/raw/creditcard.csv

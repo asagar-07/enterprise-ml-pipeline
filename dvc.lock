@@ -3,7 +3,7 @@ stages:
   data_validation:
     cmd: python src/mlPipeline/validation.py
     deps:
-    - path: data/raw/dataset.csv
+    - path: data/raw/creditcard.csv
       hash: md5
       md5: e90efcb83d69faf99fcab8b0255024de
       size: 150828752
@@ -20,7 +20,7 @@ stages:
   feature_engineering:
     cmd: python src/mlPipeline/features.py
     deps:
-    - path: data/raw/dataset.csv
+    - path: data/raw/creditcard.csv
       hash: md5
       md5: e90efcb83d69faf99fcab8b0255024de
       size: 150828752
@@ -42,6 +42,10 @@ stages:
       md5: d751713988987e9331980363e24189ce.dir
       size: 0
       nfiles: 0
+    - path: data/raw/creditcard.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
     - path: src/mlPipeline/train.py
       hash: md5
       md5: 56702e0edb5d92d8f9fe5ff929e3651b
@@ -82,3 +86,23 @@ stages:
       hash: md5
       md5: 78181feb6e6bbaf4dfaffac0e3426290
       size: 123
+  stage_01_data_ingestion:
+    cmd: python src/mlPipeline/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 575c227114c9b0f35723611e3ab9bea4
+      size: 308
+    - path: params.yaml
+      hash: md5
+      md5: 398212c70649f699a9280cfb321ed49e
+      size: 80
+    - path: src/mlPipeline/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 546169b75fe9e170aba76a1c86580a22
+      size: 948
+    outs:
+    - path: data/raw/creditcard.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752

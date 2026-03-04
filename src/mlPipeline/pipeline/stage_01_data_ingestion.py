@@ -1,6 +1,6 @@
-from src.mlPipeline.config.configuration import ConfigurationManager
-from src.mlPipeline.components.data_ingestion import DataIngestion
-from src.mlPipeline import logger
+from mlPipeline.config.configuration import ConfigurationManager
+from mlPipeline.components.data_ingestion import DataIngestion
+from mlPipeline import logger
 
 STAGE_NAME = "Data Ingestion Stage"
 

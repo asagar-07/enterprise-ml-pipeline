@@ -1,7 +1,7 @@
-from src.mlPipeline.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
-from src.mlPipeline.utils.common import read_yaml, create_directories
+from mlPipeline.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
+from mlPipeline.utils.common import read_yaml, create_directories
 from pathlib import Path
-from src.mlPipeline.entity.config_entity import DataIngestionConfig
+from mlPipeline.entity.config_entity import DataIngestionConfig
 
 
 class ConfigurationManager:
