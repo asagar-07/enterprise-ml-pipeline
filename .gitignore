@@ -1,0 +1,8 @@
+# DVC outputs
+data/features/
+models/
+reports/validation/
+reports/evaluation/
+reports/registry/
+mlruns/
+mlflow.db
