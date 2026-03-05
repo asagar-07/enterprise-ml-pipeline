@@ -1,5 +1,8 @@
 # DVC outputs
-data/features/
+data/raw/*
+data/processed/*
+data/features/*
+
 models/
 reports/validation/
 reports/evaluation/
