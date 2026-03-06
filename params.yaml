@@ -1,3 +1,10 @@
+data_validation:
+  duplicate_threshold: 0.2
+  missing_threshold: 0.2
+  
+
+
+
 training:
   test_size: 0.2
   random_state: 42

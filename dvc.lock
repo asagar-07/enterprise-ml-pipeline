@@ -91,12 +91,20 @@ stages:
     deps:
     - path: configs/config.yaml
       hash: md5
-      md5: 575c227114c9b0f35723611e3ab9bea4
-      size: 308
+      md5: ef1647b943e5c851de0d220de27f9a53
+      size: 491
     - path: params.yaml
       hash: md5
-      md5: 398212c70649f699a9280cfb321ed49e
-      size: 80
+      md5: 887ded868b1e898cdca0390fbd74eaf4
+      size: 155
+    - path: src/mlPipeline/components/data_ingestion.py
+      hash: md5
+      md5: 4adfc83d39386e9ab8ef31d046055ffc
+      size: 1882
+    - path: src/mlPipeline/config/configuration.py
+      hash: md5
+      md5: 38c7564be4621f349403725c9dfcd3e1
+      size: 1721
     - path: src/mlPipeline/pipeline/stage_01_data_ingestion.py
       hash: md5
       md5: 546169b75fe9e170aba76a1c86580a22
@@ -106,3 +114,43 @@ stages:
       hash: md5
       md5: e90efcb83d69faf99fcab8b0255024de
       size: 150828752
+  stage_02_data_validation:
+    cmd: python src/mlPipeline/pipeline/stage_02_data_validation.py
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: ef1647b943e5c851de0d220de27f9a53
+      size: 491
+    - path: configs/schema.yaml
+      hash: md5
+      md5: 6d4018ac68002b5a6829e2e0a99e4f4b
+      size: 481
+    - path: data/raw/creditcard.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: params.yaml
+      hash: md5
+      md5: 887ded868b1e898cdca0390fbd74eaf4
+      size: 155
+    - path: src/mlPipeline/components/data_validation.py
+      hash: md5
+      md5: 23d4e67b910ab2631a7c59de9c491c59
+      size: 8273
+    - path: src/mlPipeline/config/configuration.py
+      hash: md5
+      md5: 38c7564be4621f349403725c9dfcd3e1
+      size: 1721
+    - path: src/mlPipeline/pipeline/stage_02_data_validation.py
+      hash: md5
+      md5: af57980a5163b243bd9d897abd870e65
+      size: 1130
+    outs:
+    - path: reports/validation/report.json
+      hash: md5
+      md5: ac4e3b20b873fa1ecf5e2d72ee223221
+      size: 501
+    - path: reports/validation/status.txt
+      hash: md5
+      md5: 7a95bf926a0333f57705aeac07a362a2
+      size: 4

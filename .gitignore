@@ -1,26 +1,46 @@
-# DVC outputs
+#--- Data & DVC files ---
+#Ignore all data files and DVC files, but track .gitignore and .dvc files
 data/raw/*
 data/processed/*
 data/features/*
+!data/**/.gitignore
+!data/**/*.dvc
 
-models/
-reports/validation/
-reports/evaluation/
-reports/registry/
+
+#---MLFlow & Models---
+#Ignore local experiment tracking and model artifacts, but track the registry
 mlruns/
 mlflow.db
+models/
+artifacts/
 
-# Project boilerplate
-project_template.py
+# --Reports---
+#Ignore generated reports
+reports/evaluation/
+reports/registry/
 
-# Ignore Jupyter Notebook checkpoints
-**/.ipynb_checkpoints
-research/*.ipynb
-research/
-
-.DS_Store
-logs/
+# --- Python and Environment ---
+# Standard Python ignore patterns
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
 venv/
+.env
 
-artifacts/*
-/models
+# --- IDE & OS ---
+.DS_Store
+.vscode/
+.idea/
+
+# --- Research & Templates ---
+# Ignore the setup script and the entire research scratchpad
+project_template.py
+research/
+**/.ipynb_checkpoints
+
+# --- Logs ---
+#Ignore log files
+logs/
