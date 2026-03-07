@@ -35,7 +35,7 @@ class DataValidation:
         }
 
     def _generate_report(self, report_data: dict) -> None:
-        """Generate validation reports in JSON and TXT formats."""
+        """Generate validation reports in JSON."""
         try:
             report_json_path = self.config.report_json_path            
             os.makedirs(report_json_path.parent, exist_ok=True)

@@ -13,6 +13,13 @@ data_validation:
   report_json: report.json
   status_file: status.txt
 
+data_transformation:
+  root_dir: artifacts/data_transformation
+  data_path: data/raw/creditcard.csv
+  preprocessed_data_path: artifacts/data_transformation/preprocessed
+  transformer_object_file: artifacts/data_transformation/preprocessor.joblib
+  stats_file_path: reports/data_transformation/preprocessor_stats.json
+  
 
 experiment:
   name: fraud_detection_experiment

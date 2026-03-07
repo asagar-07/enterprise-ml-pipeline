@@ -16,3 +16,11 @@ class DataValidationConfig:
     report_dir: Path
     report_json_path: Path
     status_file_path: Path
+
+@dataclass(frozen=True)
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    preprocessed_data_path: Path
+    transformer_object_file: Path
+    stats_file_path: Path

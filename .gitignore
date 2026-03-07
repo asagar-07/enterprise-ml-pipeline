@@ -13,15 +13,19 @@ mlruns/
 mlflow.db
 models/
 artifacts/
+*.parquet
+*joblib
 
 # --Reports---
 #Ignore generated reports
 reports/evaluation/
 reports/registry/
+reports/data_transformation/
 
 # --- Python and Environment ---
 # Standard Python ignore patterns
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 *.egg-info/
@@ -44,3 +48,4 @@ research/
 # --- Logs ---
 #Ignore log files
 logs/
+

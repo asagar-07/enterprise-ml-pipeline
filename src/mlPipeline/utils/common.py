@@ -137,3 +137,15 @@ def get_size(path: Path) -> str:
             return f"{size_bytes:.2f} {unit}"
         size_bytes /= 1024
     return f"{size_bytes:.2f} PB"
+
+
+def save_to_parquet(df, path: Path):
+    """
+    Saves a DataFrame to a Parquet file.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to be saved.
+        path (Path): The path where the Parquet file will be saved.
+    """
+    df.to_parquet(path, index=False)
+    logger.info(f"DataFrame successfully saved to Parquet file: {path}")    

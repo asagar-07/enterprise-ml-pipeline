@@ -24,3 +24,18 @@ stages:
       - reports/validation/status.txt
       - reports/validation/report.json
 
+  stage_03_data_transformation:
+    cmd: python src/mlPipeline/pipeline/stage_03_data_transformation.py
+    deps:
+      - src/mlPipeline/pipeline/stage_03_data_transformation.py
+      - src/mlPipeline/components/data_transformation.py
+      - src/mlPipeline/config/configuration.py
+      - configs/config.yaml
+      - params.yaml
+      - data/raw/creditcard.csv
+    outs:
+      - reports/data_transformation/preprocessor_stats.json
+      - artifacts/data_transformation/preprocessor.joblib
+      - artifacts/data_transformation/preprocessed/train.parquet
+      - artifacts/data_transformation/preprocessed/test.parquet
+      - artifacts/data_transformation/preprocessed/val.parquet

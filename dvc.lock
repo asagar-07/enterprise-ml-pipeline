@@ -91,20 +91,20 @@ stages:
     deps:
     - path: configs/config.yaml
       hash: md5
-      md5: ef1647b943e5c851de0d220de27f9a53
-      size: 491
+      md5: 3a602a83b0acfa7d83dc338728a91ca3
+      size: 811
     - path: params.yaml
       hash: md5
-      md5: 887ded868b1e898cdca0390fbd74eaf4
-      size: 155
+      md5: 5f4f8ca9001d830b5290e1a53d891b8c
+      size: 273
     - path: src/mlPipeline/components/data_ingestion.py
       hash: md5
       md5: 4adfc83d39386e9ab8ef31d046055ffc
       size: 1882
     - path: src/mlPipeline/config/configuration.py
       hash: md5
-      md5: 38c7564be4621f349403725c9dfcd3e1
-      size: 1721
+      md5: 8002096b3f21ebcef7987ca7153e8e3d
+      size: 2713
     - path: src/mlPipeline/pipeline/stage_01_data_ingestion.py
       hash: md5
       md5: 546169b75fe9e170aba76a1c86580a22
@@ -119,8 +119,8 @@ stages:
     deps:
     - path: configs/config.yaml
       hash: md5
-      md5: ef1647b943e5c851de0d220de27f9a53
-      size: 491
+      md5: 3a602a83b0acfa7d83dc338728a91ca3
+      size: 811
     - path: configs/schema.yaml
       hash: md5
       md5: 6d4018ac68002b5a6829e2e0a99e4f4b
@@ -131,16 +131,16 @@ stages:
       size: 150828752
     - path: params.yaml
       hash: md5
-      md5: 887ded868b1e898cdca0390fbd74eaf4
-      size: 155
+      md5: 5f4f8ca9001d830b5290e1a53d891b8c
+      size: 273
     - path: src/mlPipeline/components/data_validation.py
       hash: md5
-      md5: 23d4e67b910ab2631a7c59de9c491c59
-      size: 8273
+      md5: 675da2476ec49b432d63706ae8ba2c9f
+      size: 8257
     - path: src/mlPipeline/config/configuration.py
       hash: md5
-      md5: 38c7564be4621f349403725c9dfcd3e1
-      size: 1721
+      md5: 8002096b3f21ebcef7987ca7153e8e3d
+      size: 2713
     - path: src/mlPipeline/pipeline/stage_02_data_validation.py
       hash: md5
       md5: af57980a5163b243bd9d897abd870e65
@@ -154,3 +154,51 @@ stages:
       hash: md5
       md5: 7a95bf926a0333f57705aeac07a362a2
       size: 4
+  stage_03_data_transformation:
+    cmd: python src/mlPipeline/pipeline/stage_03_data_transformation.py
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 3a602a83b0acfa7d83dc338728a91ca3
+      size: 811
+    - path: data/raw/creditcard.csv
+      hash: md5
+      md5: e90efcb83d69faf99fcab8b0255024de
+      size: 150828752
+    - path: params.yaml
+      hash: md5
+      md5: 5f4f8ca9001d830b5290e1a53d891b8c
+      size: 273
+    - path: src/mlPipeline/components/data_transformation.py
+      hash: md5
+      md5: 466a6bc6acf23013a061887d0b694922
+      size: 12893
+    - path: src/mlPipeline/config/configuration.py
+      hash: md5
+      md5: 8002096b3f21ebcef7987ca7153e8e3d
+      size: 2713
+    - path: src/mlPipeline/pipeline/stage_03_data_transformation.py
+      hash: md5
+      md5: 1f97d6b3aeb1afdb8f8122710b267263
+      size: 981
+    outs:
+    - path: artifacts/data_transformation/preprocessed/test.parquet
+      hash: md5
+      md5: 1a02fb27671b9c32b97a5f6abdc6ac77
+      size: 12083615
+    - path: artifacts/data_transformation/preprocessed/train.parquet
+      hash: md5
+      md5: d225b48b37286957fef6fc09b3cb6c4c
+      size: 53209832
+    - path: artifacts/data_transformation/preprocessed/val.parquet
+      hash: md5
+      md5: 12350a820d2b468084de8b76b1787048
+      size: 12080415
+    - path: artifacts/data_transformation/preprocessor.joblib
+      hash: md5
+      md5: c8a74c9ea5d283340e448dc372a8d71c
+      size: 5381
+    - path: reports/data_transformation/preprocessor_stats.json
+      hash: md5
+      md5: 4ba74b2bc327be995b1d0824dfd27e7d
+      size: 8289

@@ -2,8 +2,13 @@ data_validation:
   duplicate_threshold: 0.2
   missing_threshold: 0.2
   
-
-
+data_transformation:
+  train_size: 0.70
+  test_size: 0.15
+  val_size: 0.15
+  target_column: Class
+  random_state: 42
+  
 
 training:
   test_size: 0.2

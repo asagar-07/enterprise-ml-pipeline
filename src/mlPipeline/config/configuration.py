@@ -1,7 +1,7 @@
 from mlPipeline.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from mlPipeline.utils.common import read_yaml, create_directories
 from pathlib import Path
-from mlPipeline.entity.config_entity import DataIngestionConfig, DataValidationConfig
+from mlPipeline.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 
 
 class ConfigurationManager:
@@ -24,6 +24,7 @@ class ConfigurationManager:
 
         return data_ingestion_config
 
+
     def get_data_validation_config(self) -> DataValidationConfig:
         data_validation = self.config.data_validation
 
@@ -42,3 +43,23 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+    
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        data_transformation = self.config.data_transformation
+        
+        root_dir = Path(data_transformation.root_dir) 
+        preprocessed_data_path = Path(data_transformation.preprocessed_data_path)
+        create_directories([root_dir])  # Ensure the root directory exists
+        create_directories([preprocessed_data_path])  # Ensure the preprocessed directory exists
+        create_directories([Path(data_transformation.stats_file_path).parent])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=root_dir,
+            data_path=Path(data_transformation.data_path),
+            preprocessed_data_path=preprocessed_data_path,
+            transformer_object_file=Path(data_transformation.transformer_object_file),
+            stats_file_path=Path(data_transformation.stats_file_path)
+        )   
+
+        return data_transformation_config
