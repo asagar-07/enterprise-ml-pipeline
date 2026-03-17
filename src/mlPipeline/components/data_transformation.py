@@ -113,12 +113,12 @@ class DataTransformation:
         X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=(test_size / (val_size + test_size)), random_state=self.params.data_transformation.random_state, shuffle=False)
 
         return {
-            "X_train": X_train,
-            "y_train": y_train,
-            "X_val": X_val,
-            "y_val": y_val,
-            "X_test": X_test,
-            "y_test": y_test
+            "X_train": X_train.reset_index(drop=True),
+            "y_train": y_train.reset_index(drop=True),
+            "X_val": X_val.reset_index(drop=True),
+            "y_val": y_val.reset_index(drop=True),
+            "X_test": X_test.reset_index(drop=True),
+            "y_test": y_test.reset_index(drop=True)
         }
 
     def transform_data(self) -> dict:
@@ -196,16 +196,16 @@ class DataTransformation:
 
             # save to preprocessed path as parquet
             preprocessed_data_path = self.config.preprocessed_data_path
-            os.makedirs(preprocessed_data_path, exist_ok=True)
-            X_train_preprocessed_df = pd.concat([X_train_processed, split_data["y_train"].reset_index(drop=True)], axis=1)
+            preprocessed_data_path.mkdir(parents=True, exist_ok=True)
+            X_train_preprocessed_df = pd.concat([X_train_processed, split_data["y_train"]], axis=1)
             train_path = preprocessed_data_path / "train.parquet"
             X_train_preprocessed_df.to_parquet(train_path, index=False)
 
-            X_val_processed_df = pd.concat([X_val_processed, split_data["y_val"].reset_index(drop=True)], axis=1)
+            X_val_processed_df = pd.concat([X_val_processed, split_data["y_val"]], axis=1)
             val_path = preprocessed_data_path / "val.parquet"
             X_val_processed_df.to_parquet(val_path, index=False)
 
-            X_test_processed_df = pd.concat([X_test_processed, split_data["y_test"].reset_index(drop=True)], axis=1)
+            X_test_processed_df = pd.concat([X_test_processed, split_data["y_test"]], axis=1)
             test_path = preprocessed_data_path / "test.parquet"
             X_test_processed_df.to_parquet(test_path, index=False)
 

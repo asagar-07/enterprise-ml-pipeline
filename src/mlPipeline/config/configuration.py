@@ -1,7 +1,7 @@
 from mlPipeline.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from mlPipeline.utils.common import read_yaml, create_directories
 from pathlib import Path
-from mlPipeline.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from mlPipeline.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig
 
 
 class ConfigurationManager:
@@ -9,6 +9,7 @@ class ConfigurationManager:
         self.config = read_yaml(config_filepath)
         self.params = read_yaml(params_filepath)
         create_directories([Path(self.config.artifacts_root)])
+
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         data_ingestion = self.config.data_ingestion
@@ -63,3 +64,24 @@ class ConfigurationManager:
         )   
 
         return data_transformation_config
+    
+
+    def get_model_trainer_config(self) -> ModelTrainingConfig:
+        model_training = self.config.model_training
+
+        root_dir = Path(model_training.root_dir)
+        trained_model_dir = Path(model_training.trained_model_dir)
+        create_directories([root_dir]) # Ensure the root directory exists
+        create_directories([trained_model_dir]) # Ensure trained_model path exists
+
+        model_training_config = ModelTrainingConfig(
+            root_dir=root_dir,
+            train_data_path=Path(model_training.train_data_path),
+            val_data_path=Path(model_training.val_data_path),
+            trained_model_dir=trained_model_dir,
+            best_model_path=Path(model_training.best_model_path),
+            metric_file_name=Path(model_training.metric_file_name)
+        )
+
+        return model_training_config
+

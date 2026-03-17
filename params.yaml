@@ -9,10 +9,16 @@ data_transformation:
   target_column: Class
   random_state: 42
   
-
-training:
-  test_size: 0.2
+model_training:
   random_state: 42
-
+  models:
+    logistic_regression:
+      max_iter: 300 # can be tuned later
+      class_weight: balanced # to address class imbalance, by penalizing misclassification of minority class
+    random_forest:
+      n_estimators: 200 # can be tuned later
+      max_depth: 10 # can be tuned later
+      class_weight: balanced
+      
 model_selection:
   metric: pr_auc

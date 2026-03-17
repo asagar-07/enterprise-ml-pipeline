@@ -24,3 +24,12 @@ class DataTransformationConfig:
     preprocessed_data_path: Path
     transformer_object_file: Path
     stats_file_path: Path
+
+@dataclass(frozen=True)
+class ModelTrainingConfig:
+    root_dir: Path
+    train_data_path: Path
+    val_data_path: Path
+    trained_model_dir: Path
+    best_model_path: Path
+    metric_file_name: Path
