@@ -1,3 +1,5 @@
+target_column: Class
+
 data_validation:
   duplicate_threshold: 0.2
   missing_threshold: 0.2
@@ -6,7 +8,6 @@ data_transformation:
   train_size: 0.70
   test_size: 0.15
   val_size: 0.15
-  target_column: Class
   random_state: 42
   
 model_training:
@@ -19,6 +20,26 @@ model_training:
       n_estimators: 200 # can be tuned later
       max_depth: 10 # can be tuned later
       class_weight: balanced
-      
-model_selection:
-  metric: pr_auc
+    decision_tree:
+      class_weight: balanced
+    xgboost:
+      n_estimators: 200
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      eval_metric: logloss
+
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: Creditcard Fraud Detection
+
+model_registry:
+  registered_model_name: creditcard_fraud_model
+
+model_evaluation:
+  enable_model_registration: true
+  min_f1_score: 0.75
+  min_recall: 0.70
+  min_roc_auc: 0.90

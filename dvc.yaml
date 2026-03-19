@@ -45,6 +45,7 @@ stages:
     deps:
       - src/mlPipeline/pipeline/stage_04_model_training.py
       - src/mlPipeline/components/model_trainer.py
+      - src/mlPipeline/utils/model_registry.py
       - configs/config.yaml
       - params.yaml
       - artifacts/data_transformation/preprocessed/train.parquet
@@ -52,5 +53,24 @@ stages:
     outs:
       - artifacts/model_training/models
       - artifacts/model_training/best_model.joblib
+      - artifacts/model_training/mlflow_model_info.json
     metrics:
       - artifacts/model_training/train_metrics.json
+      
+
+  stage_05_model_evaluation:
+    cmd: python src/mlPipeline/pipeline/stage_05_model_evaluation.py
+    deps:
+      - src/mlPipeline/pipeline/stage_05_model_evaluation.py
+      - src/mlPipeline/components/model_evaluation.py
+      - configs/config.yaml
+      - params.yaml
+      - artifacts/data_transformation/preprocessed/test.parquet
+      - artifacts/model_training/best_model.joblib
+      - artifacts/model_training/train_metrics.json
+      - artifacts/model_training/mlflow_model_info.json
+    outs:
+      - artifacts/model_evaluation/classification_report.txt
+      - artifacts/model_evaluation/confusion_matrix.png
+    metrics:
+      - artifacts/model_evaluation/evaluation_metrics.json  

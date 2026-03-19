@@ -1,7 +1,7 @@
 from mlPipeline.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from mlPipeline.utils.common import read_yaml, create_directories
 from pathlib import Path
-from mlPipeline.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig
+from mlPipeline.entity.config_entity import (DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig, ModelEvaluationConfig)
 
 
 class ConfigurationManager:
@@ -85,3 +85,18 @@ class ConfigurationManager:
 
         return model_training_config
 
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        model_evaluation = self.config.model_evaluation
+
+        root_dir = Path(model_evaluation.root_dir)
+        create_directories([root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=root_dir,
+            test_data_path = Path(model_evaluation.test_data_path),
+            best_model_path =Path(model_evaluation.best_model_path),
+            metric_file_name = Path(model_evaluation.metric_file_name)
+        )
+
+        return model_evaluation_config

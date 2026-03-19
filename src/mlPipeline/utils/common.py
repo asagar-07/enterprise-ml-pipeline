@@ -149,3 +149,8 @@ def save_to_parquet(df, path: Path):
     """
     df.to_parquet(path, index=False)
     logger.info(f"DataFrame successfully saved to Parquet file: {path}")    
+
+def save_text(file_path: Path, text: str) -> None:
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(file_path, "w") as f:
+            f.write(text)

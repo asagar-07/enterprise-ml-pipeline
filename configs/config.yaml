@@ -27,7 +27,12 @@ model_training:
   trained_model_dir: artifacts/model_training/models
   best_model_path: artifacts/model_training/best_model.joblib
   metric_file_name: artifacts/model_training/train_metrics.json
-  
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  test_data_path: artifacts/data_transformation/preprocessed/test.parquet
+  best_model_path: artifacts/model_training/best_model.joblib
+  metric_file_name: artifacts/model_evaluation/evaluation_metrics.json
 
 experiment:
   name: fraud_detection_experiment

@@ -27,7 +27,7 @@ class DataTransformation:
                 "time_feature": ["Time"],
                 "amount_feature": ["Amount"]
             },
-            "target_column": self.params.data_transformation.target_column,
+            "target_column": self.params.target_column,
             "input_rows": 0,
             "input_columns": 0,
             "duplicates_dropped": 0,
@@ -88,7 +88,7 @@ class DataTransformation:
 
     def _drop_missing_target_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         """Drop rows with missing target values."""
-        target_column = self.params.data_transformation.target_column
+        target_column = self.params.target_column
         missing_target_rows = df[target_column].isnull().sum()
         df = df.dropna(subset=[target_column])
         logger.info(f"Dropped rows with missing target values: {missing_target_rows}")
@@ -101,8 +101,8 @@ class DataTransformation:
         # Sort by Time
         df = df.sort_values(by="Time").reset_index(drop=True)
         
-        X = df.drop(columns=[self.params.data_transformation.target_column])
-        y = df[self.params.data_transformation.target_column]
+        X = df.drop(columns=[self.params.target_column])
+        y = df[self.params.target_column]
         
         # Splitting the data
         # First Split: Train vs Temp (Val + Test)
@@ -134,7 +134,7 @@ class DataTransformation:
                 raise ValueError(f"Input data file is empty: {data_path}")
             
             #---Guardrail: Ensure target column exists in the input data ---#
-            target_column = self.params.data_transformation.target_column
+            target_column = self.params.target_column
             df = pd.read_csv(data_path)
 
             if target_column not in df.columns:
