@@ -133,14 +133,14 @@ class ModelTrainer:
 
                     model_file_path = self.config.trained_model_dir/ f"{model_name}.joblib"
                     joblib.dump(model, model_file_path)
-                    mlflow.sklearn.log_model(sk_model=model, artifact_path = model_name) #name=model_name)
+                    model_info = mlflow.sklearn.log_model(sk_model=model, name = model_name) 
                     
                     training_results[model_name] = {
                         "model": model,
                         "metrics": metrics,
                         "model_file_path": model_file_path,
                         "mlflow_run_id": child_run.info.run_id,
-                        "mlflow_model_artifact_path": model_name,
+                        "logged_model_uri": model_info.model_uri,
                     }
 
         return training_results
@@ -163,7 +163,7 @@ class ModelTrainer:
             "best_model_metrics": training_results[best_model_name]["metrics"],
             "best_model_file_path": training_results[best_model_name]["model_file_path"],
             "best_model_mlflow_run_id": training_results[best_model_name]["mlflow_run_id"],
-            "best_model_mlflow_artifact_path": training_results[best_model_name]["mlflow_model_artifact_path"],
+            "best_model_logged_model_uri": training_results[best_model_name]["logged_model_uri"],
         }
     
     
@@ -192,12 +192,12 @@ class ModelTrainer:
         return metrics_path
 
 
-    def save_mlflow_model_info(self, run_id: str, model_artifact_path: str = "model"):
+    def save_mlflow_model_info(self, run_id: str, logged_model_uri: str) -> Path:
         mlflow_model_info_path = self.config.root_dir/"mlflow_model_info.json"
 
         mlflow_model_info_payload = {
             "run_id": run_id,
-            "model_artifact_path": model_artifact_path,
+            "logged_model_uri": logged_model_uri,
             "registered_model_name": self.registered_model_name,
             "local_model_path": str(self.config.best_model_path),
             }
@@ -214,7 +214,7 @@ class ModelTrainer:
 
         metrics_path = self.save_metrics(best_model_details=best_model_details, training_results=training_results)
 
-        mlflow_model_info_path = self.save_mlflow_model_info(run_id=best_model_details["best_model_mlflow_run_id"], model_artifact_path=best_model_details["best_model_mlflow_artifact_path"],)
+        mlflow_model_info_path = self.save_mlflow_model_info(run_id=best_model_details["best_model_mlflow_run_id"], logged_model_uri=best_model_details["best_model_logged_model_uri"],)
 
         logger.info(f"Best model saved at: {best_model_path}")
         logger.info(f"Metrics saved at: {metrics_path}")
@@ -226,5 +226,5 @@ class ModelTrainer:
             "mlflow_model_info_path": str(mlflow_model_info_path),
             "best_model_name": best_model_details["best_model_name"],
             "best_model_mlflow_run_id": best_model_details["best_model_mlflow_run_id"],
-            "best_model_mlflow_artifact_path": best_model_details["best_model_mlflow_artifact_path"],
+            "best_model_logged_model_uri": best_model_details["best_model_logged_model_uri"],
         }
