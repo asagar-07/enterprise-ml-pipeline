@@ -80,7 +80,8 @@ class ConfigurationManager:
             val_data_path=Path(model_training.val_data_path),
             trained_model_dir=trained_model_dir,
             best_model_path=Path(model_training.best_model_path),
-            metric_file_name=Path(model_training.metric_file_name)
+            metric_file_name=Path(model_training.metric_file_name),
+            preprocessor_path=Path(model_training.preprocessor_path)
         )
 
         return model_training_config

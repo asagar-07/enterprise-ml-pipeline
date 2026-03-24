@@ -33,6 +33,7 @@ class ModelTrainingConfig:
     trained_model_dir: Path
     best_model_path: Path
     metric_file_name: Path
+    preprocessor_path: Path
 
 @dataclass(frozen=True)
 class ModelEvaluationConfig:

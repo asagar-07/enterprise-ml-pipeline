@@ -5,6 +5,7 @@ from typing import Any
 import mlflow
 import mlflow.sklearn
 import pandas as pd
+from sklearn.pipeline import Pipeline
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay)
 import matplotlib.pyplot as plt
 
@@ -133,12 +134,25 @@ class ModelTrainer:
 
                     model_file_path = self.config.trained_model_dir/ f"{model_name}.joblib"
                     joblib.dump(model, model_file_path)
-                    model_info = mlflow.sklearn.log_model(sk_model=model, name = model_name) 
+
+                    # logging full pipeline include preprocessor for inference
+                    loaded_preprocessor = joblib.load(self.config.preprocessor_path)
+
+                    full_pipeline = Pipeline([
+                        ("preprocessor", loaded_preprocessor),
+                        ("model", model)
+                    ])
+                    model_info = mlflow.sklearn.log_model(sk_model=full_pipeline, name=model_name) 
+
+                    full_pipeline_path = self.config.trained_model_dir/ f"{model_name}_pipeline.joblib"
+                    joblib.dump(full_pipeline, full_pipeline_path)
                     
                     training_results[model_name] = {
                         "model": model,
+                        "full_pipeline": full_pipeline, 
                         "metrics": metrics,
                         "model_file_path": model_file_path,
+                        "full_pipeline_path": full_pipeline_path,
                         "mlflow_run_id": child_run.info.run_id,
                         "logged_model_uri": model_info.model_uri,
                     }
@@ -160,14 +174,16 @@ class ModelTrainer:
         return {
             "best_model_name": best_model_name,
             "best_model": training_results[best_model_name]["model"],
+            "best_full_pipeline": training_results[best_model_name]["full_pipeline"],
             "best_model_metrics": training_results[best_model_name]["metrics"],
             "best_model_file_path": training_results[best_model_name]["model_file_path"],
+            "best_full_pipeline_path": training_results[best_model_name]["full_pipeline_path"],
             "best_model_mlflow_run_id": training_results[best_model_name]["mlflow_run_id"],
             "best_model_logged_model_uri": training_results[best_model_name]["logged_model_uri"],
         }
     
     
-    def save_best_model(self, best_model_details:dict) -> Path:
+    def save_best_model(self, best_model_details: dict) -> Path:
         best_model_path = self.config.best_model_path
         best_model = best_model_details["best_model"]
         best_model_name = best_model_details["best_model_name"]
@@ -199,7 +215,7 @@ class ModelTrainer:
             "run_id": run_id,
             "logged_model_uri": logged_model_uri,
             "registered_model_name": self.registered_model_name,
-            "local_model_path": str(self.config.best_model_path),
+            "local_pipeline_path": str(self.config.best_model_path),
             }
         
         save_json(mlflow_model_info_path, mlflow_model_info_payload)

@@ -37,6 +37,7 @@ mlflow:
 
 model_registry:
   registered_model_name: creditcard_fraud_model
+  model_alias: champion
 
 model_evaluation:
   enable_model_registration: true

@@ -27,6 +27,7 @@ model_training:
   trained_model_dir: artifacts/model_training/models
   best_model_path: artifacts/model_training/best_model.joblib
   metric_file_name: artifacts/model_training/train_metrics.json
+  preprocessor_path: artifacts/data_transformation/preprocessor.joblib
 
 model_evaluation:
   root_dir: artifacts/model_evaluation
