@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 from mlPipeline.constants import PARAMS_FILE_PATH
 from mlPipeline.utils.common import read_yaml, save_json, load_json, save_text
+from mlPipeline.utils.model_registry import configure_mlflow
 from mlPipeline.entity.config_entity import ModelEvaluationConfig
 from mlPipeline import logger
 
@@ -29,6 +30,11 @@ class ModelEvaluation:
         self.min_f1_score = self._safe_get(self.params, ["model_evaluation", "min_f1_score"],default=0.0,)
         self.min_roc_auc = self._safe_get(self.params, ["model_evaluation", "min_roc_auc"], default=0.0,)
         self.min_recall = self._safe_get(self.params, ["model_evaluation", "min_recall"], default=0.0,)
+
+        configure_mlflow()
+        logger.info(f"MLflow tracking URI in evaluation: {mlflow.get_tracking_uri()}")
+        logger.info(f"MLflow registry URI in evaluation: {mlflow.get_registry_uri()}")
+
     
     def _safe_get(self, obj: Any, keys: list[str], default: Any = None) -> Any:
         current = obj
@@ -327,7 +333,6 @@ class ModelEvaluation:
     def evaluate_and_track_model(self) -> dict[str, Any]:
         self.config.root_dir.mkdir(parents=True, exist_ok=True)
 
-        mlflow.set_tracking_uri(self.mlflow_tracking_uri)
         mlflow.set_experiment(self.mlflow_experiment_name)
 
         with mlflow.start_run(run_name = "model_evaluation") as evaluation_run:

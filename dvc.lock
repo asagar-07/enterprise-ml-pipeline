@@ -223,16 +223,16 @@ stages:
       size: 1043
     - path: src/mlPipeline/components/model_trainer.py
       hash: md5
-      md5: 583c5ca48cb8a324c0c0014fa91998ef
-      size: 11149
+      md5: fd36024694ebf7782c00742d38573db9
+      size: 11313
     - path: src/mlPipeline/pipeline/stage_04_model_training.py
       hash: md5
       md5: cd5f8d79906d93246a6836932d942969
       size: 780
     - path: src/mlPipeline/utils/model_registry.py
       hash: md5
-      md5: c41228fbe450849e6359180943fcfe95
-      size: 876
+      md5: 58295561e2460ff2829b71a6bc252e9a
+      size: 922
     outs:
     - path: artifacts/model_training/best_model.joblib
       hash: md5
@@ -240,7 +240,7 @@ stages:
       size: 3278985
     - path: artifacts/model_training/mlflow_model_info.json
       hash: md5
-      md5: f616790e99b329fdba8b6d0af1537d60
+      md5: 94578dd0293f8e488c5f53a14b9c679c
       size: 250
     - path: artifacts/model_training/models
       hash: md5
@@ -264,7 +264,7 @@ stages:
       size: 3278985
     - path: artifacts/model_training/mlflow_model_info.json
       hash: md5
-      md5: f616790e99b329fdba8b6d0af1537d60
+      md5: 94578dd0293f8e488c5f53a14b9c679c
       size: 250
     - path: artifacts/model_training/train_metrics.json
       hash: md5
@@ -280,8 +280,8 @@ stages:
       size: 1043
     - path: src/mlPipeline/components/model_evaluation.py
       hash: md5
-      md5: a9aef3d0fe5704586b5ff66ebd1937d1
-      size: 17208
+      md5: 3297ad7da908084d9544d2a19a20789c
+      size: 17414
     - path: src/mlPipeline/pipeline/stage_05_model_evaluation.py
       hash: md5
       md5: 5c5a7eeed346093582da074e9ffcc192

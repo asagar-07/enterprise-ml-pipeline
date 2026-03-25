@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 from mlPipeline.constants import PARAMS_FILE_PATH
 from mlPipeline.utils.common import read_yaml, save_json
-from mlPipeline.utils.model_registry import MODEL_REGISTRY
+from mlPipeline.utils.model_registry import MODEL_REGISTRY, configure_mlflow
 from mlPipeline.entity.config_entity import ModelTrainingConfig
 from mlPipeline import logger
 
@@ -29,6 +29,10 @@ class ModelTrainer:
 
         self.config.root_dir.mkdir(parents=True, exist_ok=True)
         self.config.trained_model_dir.mkdir(parents=True, exist_ok=True)
+
+        configure_mlflow()
+        logger.info(f"MLflow tracking URI in trainer: {mlflow.get_tracking_uri()}")
+        logger.info(f"MLflow registry URI in trainer: {mlflow.get_registry_uri()}")
 
     def _safe_get(self, obj: Any, keys: list[str], default: Any = None) -> Any:
         current = obj
@@ -98,8 +102,7 @@ class ModelTrainer:
 
     def train_and_track_models(self) -> dict[str, dict]:
         training_results = {}
-
-        mlflow.set_tracking_uri(self.mlflow_tracking_uri)
+        
         mlflow.set_experiment(self.mlflow_experiment_name)
         
         with mlflow.start_run(run_name = "model_training_parent") as parent_run:
