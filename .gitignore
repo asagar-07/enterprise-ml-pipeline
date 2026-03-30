@@ -1,5 +1,9 @@
 #--- Data & DVC files ---
 #Ignore all data files and DVC files, but track .gitignore and .dvc files
+# DVC
+dvc-storage/
+.dvc/cache/
+
 data/raw/*
 data/processed/*
 data/features/*
@@ -38,6 +42,7 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+.env
 
 # --- Research & Templates ---
 # Ignore the setup script and the entire research scratchpad
@@ -49,3 +54,6 @@ research/
 #Ignore log files
 logs/
 
+# temp / local
+repo_structure.txt
+project_template_creation.py

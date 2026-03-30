@@ -9,6 +9,9 @@ from fastapi import FastAPI, status, HTTPException, Depends
 
 from api.deps import get_model, teardown_model
 from api.errors import value_error_handler, unhandled_exception_handler, request_validation_error_hanlder
+from api.routes.prompt_routes import router as prompt_router
+from api.routes.analytics_routes import router as analytics_router
+
 from fastapi.exceptions import RequestValidationError
 from api.schemas import SinglePredictRequest, SinglePredictResponse, BatchPredictRequest, BatchPredictResponse, ItemResult, ErrorDetail
 
@@ -43,6 +46,12 @@ app = FastAPI(title="Credit Card Fraud Detection API", lifespan=lifespan)
 app.add_exception_handler(RequestValidationError, request_validation_error_hanlder)
 app.add_exception_handler(ValueError, value_error_handler) # rather than @app.exception_handler() as my error hanldlers are centralized and defined in api/errors.py
 app.add_exception_handler(Exception, unhandled_exception_handler) # rather than @app.exception_handler() as my error hanldlers are centralized and defined in api/errors.py
+
+#---Prompt Router-----
+app.include_router(prompt_router, prefix="/llm", tags=["LLM"])
+
+#--Analytics Router----
+app.include_router(analytics_router)
 
 @app.get("/")
 async def home():
@@ -120,3 +129,4 @@ async def batch_predict(input: BatchPredictRequest, model = Depends(get_model)) 
             "failed": failed,
             },
         )
+
