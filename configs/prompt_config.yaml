@@ -1,0 +1,9 @@
+prompts:
+  fraud_detection:
+    versions:
+      v1: "Analyze the following transaction for fraud risk: {data}"
+      v2: "You are a fraud detection expert. Review this transaction carefully and explain whether it looks suspicious: {data}"
+    traffic:
+      v1: 0.7
+      v2: 0.3
+    active: true

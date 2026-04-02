@@ -42,13 +42,13 @@ async def lifespan(app: FastAPI):
     # Forcing Python garbage collection
     gc.collect()
 
-app = FastAPI(title="Credit Card Fraud Detection API", lifespan=lifespan)
+app = FastAPI(title="Credit Card Fraud Detection API", version="1.0.0", lifespan=lifespan)
 app.add_exception_handler(RequestValidationError, request_validation_error_hanlder)
 app.add_exception_handler(ValueError, value_error_handler) # rather than @app.exception_handler() as my error hanldlers are centralized and defined in api/errors.py
 app.add_exception_handler(Exception, unhandled_exception_handler) # rather than @app.exception_handler() as my error hanldlers are centralized and defined in api/errors.py
 
 #---Prompt Router-----
-app.include_router(prompt_router, prefix="/llm", tags=["LLM"])
+app.include_router(prompt_router)
 
 #--Analytics Router----
 app.include_router(analytics_router)
@@ -129,4 +129,3 @@ async def batch_predict(input: BatchPredictRequest, model = Depends(get_model)) 
             "failed": failed,
             },
         )
-

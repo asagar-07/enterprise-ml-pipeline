@@ -43,7 +43,7 @@ def call_ollama(prompt:str) -> str:
     return data.get("response", "")
 
 
-def generate_response(prompt: str):
+def generate_response(prompt: str, enable_tracking: bool = True) -> str:
     start_time = time.time()
 
     # Replacing later with OpenAI/ Grok/ Ollama
@@ -56,7 +56,7 @@ def generate_response(prompt: str):
     
     except Exception as e:
         print("OLLAMA FAILED:", repr(e))
-        response = f"[FALLBACK MOCK] Resonse for: {prompt}"
+        response = f"[FALLBACK MOCK] Response for: {prompt}"
         model_name = "Fallback-mock"
 
     latency = time.time() - start_time
@@ -67,5 +67,6 @@ def generate_response(prompt: str):
     #tracker.track(prompt=prompt, response=response, model_name="mock-llm-v1", latency=latency, extra_params=extra_params, metrics=metrics)
 
     # For Ollama response tracking
-    tracker.track(prompt=prompt, response=response, model_name=model_name, latency=latency, extra_params=extra_params, metrics=metrics, )
+    if enable_tracking:
+        tracker.track(prompt=prompt, response=response, model_name=model_name, latency=latency, extra_params=extra_params, metrics=metrics, )
     return response

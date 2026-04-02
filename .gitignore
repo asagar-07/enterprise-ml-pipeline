@@ -57,3 +57,9 @@ logs/
 # temp / local
 repo_structure.txt
 project_template_creation.py
+
+
+# Ignore prompt logs, which can be large and not needed for version control
+artifacts/prompt_logs/*.jsonl
+__pycache__/
+.pytest_cache/
