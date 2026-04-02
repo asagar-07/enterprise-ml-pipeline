@@ -4,7 +4,7 @@ from typing import Any, Dict
 import mlflow
 
 class PromptLogger:
-    """ Write prompt-run logs to a JSONL file. One JSON object per line. """
+    """ Write prompt-run logs to MLflow. """
 
     def __init__(self, experiment_name: str = "prompt_versioning_final") -> None:
         self.experiment_name = experiment_name
